@@ -2,6 +2,7 @@
 using EFDataAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace EFDemoWeb.Pages
         public void OnGet()
         {
             LoadSampleData();
+            var people = db.People
+                .Include(a => a.Addresses)
+                .Include(a => a.EmailAddresses)
+                .ToList();
         }
 
         private void LoadSampleData()
